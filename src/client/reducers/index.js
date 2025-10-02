@@ -1,5 +1,11 @@
+import { combineReducers } from 'redux'
 import alert from './alert'
-export default alert
+import player from './player'
+
+export default combineReducers({
+  alert,
+  player
+})
 
 
 
