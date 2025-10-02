@@ -1,7 +1,10 @@
 const path = require('path');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: isDevelopment ? 'development' : 'production',
   entry: './src/client/index.js',
   
   output: {
@@ -16,20 +19,36 @@ module.exports = {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       use: {
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            isDevelopment && require.resolve('react-refresh/babel')
+          ].filter(Boolean)
+        }
       }
     }]
   },
+
+  plugins: [
+    isDevelopment && new ReactRefreshWebpackPlugin()
+  ].filter(Boolean),
 
   resolve: {
     extensions: ['.js', '.jsx']
   },
 
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'build')
+    static: [
+      {
+        directory: path.join(__dirname),
+        publicPath: '/',
+        serveIndex: false,
+        watch: true
+      }
+    ],
+    historyApiFallback: {
+      index: '/index.html'
     },
-    historyApiFallback: true,
     hot: true,
     open: true,
     port: 8080,
@@ -39,23 +58,8 @@ module.exports = {
         target: 'http://localhost:3004',
         ws: true,
         changeOrigin: true
-      },
-      {
-        context: ['/api'],
-        target: 'http://localhost:3004',
-        changeOrigin: true
       }
-    ],
-    setupMiddlewares: (middlewares, devServer) => {
-      // Servir index.html pour toutes les routes non-API
-      devServer.app.get('*', (req, res, next) => {
-        if (req.path.startsWith('/socket.io') || req.path.startsWith('/api') || req.path.startsWith('/bundle.js')) {
-          return next();
-        }
-        res.sendFile(path.join(__dirname, 'index.html'));
-      });
-      return middlewares;
-    }
+    ]
   },
 
   devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'eval-source-map'

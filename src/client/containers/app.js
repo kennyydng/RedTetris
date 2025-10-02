@@ -64,7 +64,7 @@ const App = ({message}) => {
       `}</style>
       <div style={styles.gameInfo}>
         <h1 style={styles.title}>Red Tetris</h1>
-        <p style={styles.subtitle}>Le jeu de Tetris multijoueur ultime</p>
+        <p style={styles.subtitle}>Tetris multijoueur online</p>
         {message && <p>{message}</p>}        
       </div>
     </div>
