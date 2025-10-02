@@ -23,4 +23,4 @@ root.render(
   </Provider>
 )
 
-store.dispatch(alert('Soon, will be here a fantastic Tetris ...'))
+store.dispatch(alert('Bienvenue sur Red Tetris!'))

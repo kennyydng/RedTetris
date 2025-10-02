@@ -69,15 +69,102 @@ npm install
 
 ## 💻 Développement
 
-```bash
-# Démarrer le serveur
-npm run srv-dev
+### 🔧 Architecture du Projet
 
-# Démarrer le client (dans un autre terminal)
-npm run client-dev
+Le projet utilise une **architecture client-serveur** avec :
+
+- **Frontend React** : Code dans `src/client/` → Compilé vers `build/bundle.js`
+- **Backend Node.js** : Code dans `src/server/` → Sert les fichiers statiques + WebSocket
+- **Port principal** : **3004** (défini dans `params.js`)
+
+### 🚀 Démarrage Rapide (avec Hot Reload)
+
+**1. Installation des dépendances :**
+```bash
+npm install
 ```
 
-Ouvrir `http://localhost:8080`
+**2. Démarrage du développement complet :**
+```bash
+npm run dev
+```
+
+Cette commande lance automatiquement :
+- **Serveur backend** (port 3004) avec auto-reload
+- **Webpack dev server** (port 8080) avec hot reload React
+- **Proxy automatique** des WebSockets vers le backend
+
+**3. Ouvrir dans le navigateur :**
+```
+http://localhost:8080
+```
+
+🔥 **Hot Reload activé !** Modifiez votre code React et voyez les changements instantanément !
+
+### ⚡ Workflow de Développement (Nouveau)
+
+**Développement moderne avec hot reload :**
+
+1. **Démarrage** : `npm run dev` (lance tout automatiquement)
+2. **Modifications** : Éditez votre code dans `src/client/` ou `src/server/`
+3. **Résultat** : Changements instantanés dans le navigateur !
+
+**Plus besoin de :**
+- ❌ `npm run client-dist` après chaque modification
+- ❌ Refresh manuel du navigateur
+- ❌ Redémarrage manuel des serveurs
+
+### ⚙️ Workflow Classique (si besoin)
+
+**Pour la production ou debug spécifique :**
+
+1. **Construction initiale du client :**
+```bash
+npm run client-dist
+```
+
+2. **Démarrage du serveur backend uniquement :**
+```bash
+npm run srv-dev
+```
+
+3. **Accès via serveur backend :**
+```
+http://localhost:3004
+```
+
+### 📝 Scripts Disponibles
+
+```bash
+# � Développement avec Hot Reload (Recommandé)
+npm run dev            # Lance serveur backend + webpack dev server avec hot reload
+
+# �🔨 Build & Development Classique
+npm run client-dist    # Build client (production)
+npm run client-dev     # Serveur webpack seul (port 8080)
+npm run srv-dev        # Serveur backend seul (port 3004)
+npm run srv-dist       # Build serveur (production)
+
+# 🧪 Tests & Qualité
+npm run test          # Tests unitaires
+npm run coverage      # Tests + couverture de code
+npm run eslint        # Analyse statique du code
+```
+
+### 🎯 Ports et URLs
+
+- **🔥 Développement Hot Reload** : `http://localhost:8080` (webpack dev server avec proxy)
+- **📡 Serveur backend direct** : `http://localhost:3004` (serveur backend classique)
+- **⚙️ Configuration** : Voir `params.js` pour modifier les paramètres
+
+### 💡 Conseils de Développement
+
+- **🔥 Utilisez `npm run dev`** : Workflow moderne avec hot reload complet
+- **⚡ Hot Reload React** : Modifications instantanées sans perte d'état
+- **🔄 Auto-reload Backend** : Le serveur redémarre automatiquement sur les changements
+- **🌐 Proxy automatique** : WebSockets et API redirigés vers le backend
+- **🐛 Debug** : Les logs de debug sont activés avec la variable `DEBUG=tetris:*`
+- **🔧 Production** : Utilisez `client-dist` + `srv-dist` pour le build de production
 
 ## 🧪 Tests
 
