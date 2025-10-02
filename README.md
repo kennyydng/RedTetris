@@ -12,7 +12,9 @@ Red Tetris est un **jeu Tetris multijoueur en ligne** conçu pour maîtriser le 
 - **Tests unitaires** de niveau industriel
 - **Architecture réseau** pour le multijoueur temps réel
 
-*Parfait pour perturber vos sessions de gaming intergalactiques pendant vos marathons de code nocturnes ! 🚀*
+# grille de correction
+https://github.com/zanninso/42-correction-files/blob/master/red-tetris.pdf
+
 
 ## 🎮 Spécifications du Jeu
 
