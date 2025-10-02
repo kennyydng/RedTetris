@@ -1,6 +1,5 @@
 import * as server from '../../src/server/index'
 import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
 
 export const startServer = (params, cb) => {
   server.create(params)
@@ -8,13 +7,12 @@ export const startServer = (params, cb) => {
     .catch( err => cb(err) )
 }
 
-export const configureStore = (reducer, socket, initialState, types) => createStore( 
+export const configureStoreTest = (reducer, socket, initialState, types) => createStore( 
   reducer, 
   initialState, 
   applyMiddleware(
     myMiddleware(types), 
-    socketIoMiddleWare(socket),  
-    thunk
+    socketIoMiddleWare(socket)
   )
 )
 

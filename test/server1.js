@@ -1,5 +1,5 @@
 import chai from "chai"
-import {startServer, configureStore} from './helpers/server'
+import {startServer, configureStoreTest} from './helpers/server'
 import rootReducer from '../src/client/reducers'
 import {ping} from '../src/client/actions/server'
 import io from 'socket.io-client'
@@ -19,7 +19,7 @@ describe('Fake server test', function(){
   it('should pong', function(done){
     const initialState = {}
     const socket = io(params.server.url)
-    const store =  configureStore(rootReducer, socket, initialState, {
+    const store =  configureStoreTest(rootReducer, socket, initialState, {
       'pong': () =>  done()
     })
     store.dispatch(ping())

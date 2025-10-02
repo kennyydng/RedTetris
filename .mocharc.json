@@ -1,0 +1,7 @@
+{
+  "require": ["jsdom-global/register", "@babel/register"],
+  "reporter": "spec",
+  "recursive": true,
+  "exclude": ["node_modules/**/*"],
+  "extensions": ["js", "jsx"]
+}

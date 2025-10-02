@@ -1,241 +1,239 @@
-# Red Tetris Boilerplate
+# Red Tetris Boilerplate (2025 Edition) 🎮
 
-This starter kit was made to help students to develop red_tetris project : a Full Stack Javascript Tetris. We can also use it as a starting point for any product made of React / Redux and socket.io.
+[![Node.js](https://img.shields.io/badge/Node.js-24.x-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18.2-blue.svg)](https://reactjs.org/)
+[![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-2.0-purple.svg)](https://redux-toolkit.js.org/)
+[![Webpack](https://img.shields.io/badge/Webpack-5.x-lightblue.svg)](https://webpack.js.org/)
 
-It helps:
+> **🚀 Modernized starter kit** for building a Full Stack JavaScript Tetris game with cutting-edge technologies (2025 edition)
 
-* to transpile with Babel ES6 code
-* to bundle with Wbepack JS files and hot reload client's code
-* to write tests and check code coverage. 
+This fully modernized boilerplate provides everything you need to develop **Red Tetris** - a real-time multiplayer Tetris game. It can also serve as a starting point for any modern React/Redux application with Socket.io.
 
-Because we use React, Redux, Node.js and Socket.io, we had to define 3 kinds of unit tests :
+## ✨ Features
 
-* React ones like explained in redux documentation + `chai-equal-jsx`
-* Redux ones, but instead of just testing pure functions, we defined a middleware to test state’s impact after one or many actions.
-* Redux/Socket.io/Node.js, same as before, we use the same middleware but this time we can test state’s updates after socketio messages round trip.
+- **Modern React 18** with new JSX Transform
+- **Redux Toolkit** for simplified state management  
+- **Webpack 5** with Hot Module Replacement
+- **Babel 7** for ES6+ transpilation
+- **ESLint 8** with React hooks support
+- **Mocha 10** with modern testing setup
+- **Socket.io 4** for real-time communication
+- **Development & Production** build configurations
 
-### Install
+## 🛠 Tech Stack
 
-Install [node](https://nodejs.org/en/) first. After that:
+### Frontend
+- **React 18.2** - Modern UI library with latest features
+- **Redux Toolkit 2.0** - Simplified Redux with best practices
+- **React-Redux 9.1** - Official React bindings for Redux
 
-```
-$ npm install
-```
+### Backend  
+- **Node.js 24+** - JavaScript runtime
+- **Socket.io 4.8** - Real-time bidirectional communication
 
-Edit `params.js` for your needs.
+### Build Tools
+- **Webpack 5** - Module bundler with advanced optimizations
+- **Babel 7** - JavaScript compiler with preset-env
+- **ESLint 8** - Code linting with React plugins
 
+### Testing
+- **Mocha 10** - JavaScript test framework
+- **Chai 4** - BDD/TDD assertion library
+- **React Testing Library** - Simple and complete testing utilities
+- **NYC/Istanbul** - Code coverage reporting
 
-### Development Mode
+## 📦 Installation
 
-#### Launch Server
+### Prerequisites
+- **Node.js 20.17.0+** or **22.9.0+** 
+- **npm 11.6.0+**
 
-```
-$ npm run  srv-dev
-> red_tetrisboilerplate@0.0.1 srv-dev /home/eric/JS/red_tetris_boilerplate
-> DEBUG=tetris:* babel-watch -w src src/server/main.js
-```
-
-It launches a node.js server listening for socket.io connexions, that is wired to receive `ping` messages and answered to … `pong`.
-
-#### Launch Client
-
-```
-$ npm run client-dev
-> red_tetrisboilerplate@0.0.1 client-dev /home/eric/JS/red_tetris_boilerplate
-> webpack-dev-server --colors --hot --inline --host 0.0.0.0 --port 8080
-
-http://0.0.0.0:8080/
-webpack result is served from /
-content is served from /home/eric/JS/red_tetris_boilerplate
-…
-webpack: bundle is now VALID.
-```
-
-
-Point your browser to `http://0.0.0.0:8080/` it will load client side application. You should see `Soon, will be here a fantastic Tetris ...`, open your console and check you have :
-
-```
-[HMR] Waiting for update signal from WDS...
-bundle.js:28328  action @ 14:29:58.602 ALERT_POP 
-bundle.js:28340  prev state Object
-bundle.js:28344  action Object
-bundle.js:28352  next state Object
-bundle.js:616 [WDS] Hot Module Replacement enabled.
+```bash
+# Install dependencies
+npm install
 ```
 
-URL is not yet editable in `params.js`, change it directly inside `package.json`.
+## 🚀 Development
 
-As you can guess we are using webpack `hot reload` module, try to update any file under `src/client` and your browser should reload your code.
-
+### Start the Server
+```bash
+npm run srv-dev
 ```
-[WDS] App updated. Recompiling...
+Launches a Node.js server with Socket.io, listening for connections and ready to handle `ping/pong` messages.
+
+### Start the Client  
+```bash
+npm run client-dev
 ```
+Starts Webpack dev server with Hot Module Replacement at `http://localhost:8080`
 
+**Features:**
+- ⚡ **Hot Reload** - Automatic browser refresh on file changes
+- 🔍 **Source Maps** - Easy debugging in development
+- 📱 **Network Access** - Available on `0.0.0.0:8080` for mobile testing
 
-#### Test
+You should see: `"Soon, will be here a fantastic Tetris ..."` and Redux action logs in the console.
 
-Test, test and re-test …
+## 🧪 Testing
 
-Stop server, or use an other setup (//TODO)
-```
-$ npm run test
-```
-
-Tests are installed under `test` folder.
-
-#### fake.js
-
-A simple template to implement simple unit tests. In Tetris context you will try to test every functions or classes from server or client code. Just import your files and check (http://shouldjs.github.io/)[should] documentation to extend the test.
-
-
-#### redux.js
-
-Target is to test `actions` and `reducers` in one time. You can always split those tests as explained [here](http://redux.js.org/docs/recipes/WritingTests.html).
-Look at the code :
-
-```
-//cat redux1.js
-// 1
-import {configureStore} from './helpers/server'
-// 2
-import rootReducer from '../src/client/reducers'
-import {ALERT_POP, alert} from '../src/client/actions/alert'
-import chai from "chai"
-const MESSAGE = "message"
-chai.should()
-describe('Fake redux test', function(){
-  it('alert it', function(done){
-    const initialState = {}
-   // 3
-    const store =  configureStore(rootReducer, null, initialState, {
-      ALERT_POP: ({dispatch, getState}) =>  {
-        const state = getState()
-        state.message.should.equal(MESSAGE)
-        done()
-      }
-    })
-   // 4
-    store.dispatch(alert(MESSAGE))
-  });
-
-});
+### Run All Tests
+```bash
+npm run test
 ```
 
-1. We use a special middleware to set up hooks in action’s workflow.
-2. We use here the  root reducer, but it can be replaced by  any kind of reducer
-3. target is to check updates in our store, so we have to create a store for each check (`it()`), `configureStore` is a store helper.
-
-*configureStore* :
-
-* `reducer`:  not necessary the root one
-* `socket`:  (unused here)
-* `initial state`:  set up to realize the action
-* `actions hook`: object where keys are action’s type and values are callbacks. `action’s type` is one of your actions defined in your application, `callback` function will receive  {getState, dispatch, action} as real parameter.
-
-Thanks to the hook you can react to actions, just to check a new state after an action, or to send actions to follow a workflow and check state at the end.
-
-
-In our sample, we register a callback when `ALERT_POP` will be dispatched and check that `state.message`is right. Callback is called after reducers.
-
-
-#### server.js
-
-Very similar to previous test, but offer to test server code involved in a client action. You can use this kind of solution to test a pipeline like `action -> fetch -> action -> reducer`. Here client / server communication is based on socket.io and we use a middleware inspired by [redux-socket.io](https://github.com/itaylor/redux-socket.io) to transparantly dispatch and receive socket.io messages. So our test covers  `action -> socket.emit -> server code -> client socket callback -> action -> reducer`. I do not know if it’s still a unit test, but it’s a useful solution to test.
-
-Let’s have a look on code:
-
-
-```
-import chai from "chai"
-import {startServer, configureStore} from './helpers/server'
-import rootReducer from '../src/client/reducers'
-// 1
-import {ping} from '../src/client/actions/server'
-import io from 'socket.io-client'
-import params from '../params'
-chai.should()
-
-describe('Fake server test', function(){
-  let tetrisServer
-
-// 2 
-  before(cb => startServer( params.server, function(err, server){
-    tetrisServer = server
-    cb()
-  }))
-
-  after(function(done){tetrisServer.stop(done)})
-
-  it('should pong', function(done){
-    const initialState = {}
-    const socket = io(params.server.url)
-    // 3
-    const store =  configureStore(rootReducer, socket, initialState, {
-      'pong': () =>  done()
-    })
-    store.dispatch(ping())
-  });
-});
-```
-
-
-1. This time we will test server actions: it means client actions that transparently communicate with server
-2. for each `describe` we have to launch the server. Tetris server is statefull, so we can run multiple tests (`it`) on one server to check behavior (ex: multiple users, events)
-3. Now we have a socket (client connection), so middleware is able to send socket.io messages to server.
-
-In our context, we dispatch `ping` action and register a callback on `pong` action.
-
-#### Coverage
-
-```
+### Test Coverage
+```bash
 npm run coverage
+```
+Open `./coverage/lcov-report/index.html` in your browser to view detailed coverage reports.
 
-> red_tetrisboilerplate@0.0.1 coverage /home/eric/JS/red_tetris_boilerplate
-> NODE_ENV=test nyc -r lcov -r text mocha --require babel-core/register
+### Test Types
 
+#### 1. Unit Tests (`test/fake.js`)
+Simple unit tests for pure functions and utilities.
+
+#### 2. React Component Tests (`test/react1.js`)  
+Tests React components using React Testing Library:
+```javascript
+import { render } from '@testing-library/react'
+// Modern React component testing
 ```
 
-Check results …. of this command, and launch your browser to `./coverage/lcov-report/index.html`
-
-
-### Production Mode
-
-It’s not a production recipe to run your Tetris over billions of players, but just 2 commands to run it without live reload.
-
-```
-$ npm run srv-dist
-
-> red_tetrisboilerplate@0.0.1 srv-dist /home/eric/JS/red_tetris_boilerplate
-> DEBUG=tetris:* babel src --out-dir dist
-
-src/client/actions/alert.js -> dist/client/actions/alert.js
-src/client/actions/server.js -> dist/client/actions/server.js
-src/client/components/test.js -> dist/client/components/test.js
-src/client/containers/app.js -> dist/client/containers/app.js
-src/client/index.js -> dist/client/index.js
-src/client/middleware/storeStateMiddleWare.js -> dist/client/middleware/storeStateMiddleWare.js
-src/client/reducers/alert.js -> dist/client/reducers/alert.js
-src/client/reducers/index.js -> dist/client/reducers/index.js
-src/server/index.js -> dist/server/index.js
-src/server/main.js -> dist/server/main.js
-
-$ npm run client-dist
-
-> red_tetrisboilerplate@0.0.1 client-dist /home/eric/JS/red_tetris_boilerplate
-> NODE_ENV=production webpack --progress --colors
-
-Hash: 6841f78bfe6867fb2913  
-Version: webpack 1.13.0
-Time: 1923ms
-    Asset    Size  Chunks             Chunk Names
-bundle.js  754 kB       0  [emitted]  main
-    + 197 hidden modules
-
-$  DEBUG=tetris:* node dist/server/main.js 
-  tetris:info tetris listen on http://0.0.0.0:3004 +0ms
-  not yet ready to play tetris with U ...
+#### 3. Redux Integration Tests (`test/redux1.js`)
+Tests actions and reducers together using a custom middleware:
+```javascript
+import {configureStoreTest} from './helpers/server'
+// Test Redux workflow with state verification
 ```
 
-In production mode, node.js server serves `index.html` and `bundle.js`, so you have to point to url set up in `params.js` 
+#### 4. Full-Stack Tests (`test/server1.js`)
+End-to-end tests covering client ↔ server Socket.io communication:
+```javascript
+// Tests: action → socket.emit → server → client callback → action → reducer
+```
 
-That’s all folks ... 
+## 🏗 Production Build
+
+### Build Client Bundle
+```bash
+npm run client-dist
+```
+Creates optimized production bundle with:
+- **Minification** - Reduced file size
+- **Tree Shaking** - Dead code elimination  
+- **Source Maps** - Production debugging support
+
+### Build Server
+```bash
+npm run srv-dist  
+```
+Compiles server code to `dist/` directory
+
+### Run Production Server
+```bash
+DEBUG=tetris:* node dist/server/main.js
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── client/                 # Frontend React app
+│   ├── actions/           # Redux actions
+│   ├── components/        # React components  
+│   ├── containers/        # Connected components
+│   ├── middleware/        # Redux middleware
+│   ├── reducers/          # Redux reducers
+│   └── index.js          # App entry point
+├── server/                # Backend Node.js
+│   ├── index.js          # Server logic
+│   └── main.js           # Server entry point
+test/                      # Test suites
+├── helpers/              # Test utilities
+├── fake.js              # Unit tests
+├── react1.js            # React tests  
+├── redux1.js            # Redux tests
+└── server1.js           # Integration tests
+```
+
+## ⚙ Configuration Files
+
+- `babel.config.js` - Babel 7 configuration with modern presets
+- `webpack.config.js` - Webpack 5 setup with dev/prod modes
+- `.eslintrc.json` - ESLint 8 with React hooks support
+- `.mocharc.json` - Mocha test runner configuration
+- `params.js` - Application parameters
+
+## 🔧 Scripts Reference
+
+| Command | Description |
+|---------|-------------|
+| `npm run client-dev` | Start development server with HMR |
+| `npm run client-dist` | Build production client bundle |
+| `npm run srv-dev` | Start development server with auto-reload |
+| `npm run srv-dist` | Build production server |
+| `npm run test` | Run all tests |
+| `npm run coverage` | Generate test coverage report |
+| `npm run eslint` | Run ESLint code analysis |
+
+## 🆕 What's New in 2025 Edition
+
+### Major Updates
+- ⬆️ **React 15 → 18** - Latest React with concurrent features
+- ⬆️ **Redux 3 → Redux Toolkit 2** - Modern Redux with RTK
+- ⬆️ **Babel 6 → 7** - Modern JavaScript compilation  
+- ⬆️ **Webpack 1 → 5** - Advanced bundling and optimization
+- ⬆️ **ESLint 2 → 8** - Modern linting with React hooks
+- ⬆️ **Socket.io 1 → 4** - Latest real-time communication
+- ⬆️ **Node.js 18 → 24** - Latest LTS with performance improvements
+
+### New Features
+- 🎣 **React Hooks** support
+- 🔥 **Modern JSX Transform** (no more `import React`)
+- ⚡ **Webpack 5** with improved Hot Module Replacement
+- 🛡️ **TypeScript ready** architecture
+- 🧪 **React Testing Library** for better component testing
+- 📦 **Modern package management** with npm 11+
+
+## 🎯 Getting Started with Development
+
+1. **Clone and install:**
+   ```bash
+   git clone <your-repo>
+   cd RedTetris
+   npm install
+   ```
+
+2. **Start development environment:**
+   ```bash
+   # Terminal 1 - Start server
+   npm run srv-dev
+   
+   # Terminal 2 - Start client  
+   npm run client-dev
+   ```
+
+3. **Open your browser:**
+   Navigate to `http://localhost:8080` and start coding!
+
+4. **Run tests:**
+   ```bash
+   npm run test
+   npm run coverage
+   ```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+**Ready to build the next generation Tetris? Let's code! 🎮✨**
