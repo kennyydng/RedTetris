@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
-import HomePage from '../components/HomePage'
-import GameRoom from '../components/GameRoom'
-import GameMenu from '../components/GameMenu'
-import Modal from '../components/Modal'
+import HomePage from '../components/HomePage.jsx'
+import GameRoom from '../components/GameRoom.jsx'
+import GameMenu from '../components/GameMenu.jsx'
+import Modal from '../components/Modal.jsx'
 import { 
   openNameModal, 
   closeNameModal, 

@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global reset pour éviter les bordures blanches */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #tetris {
+  margin: 0;
+  padding: 0;
+  background: #000000;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}

@@ -4,8 +4,9 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import {storeStateMiddleWare} from './middleware/storeStateMiddleWare'
 import reducer from './reducers'
-import App from './containers/app'
+import App from './containers/app.jsx'
 import {alert} from './actions/alert'
+import '../styles/tailwind.css'
 
 const store = configureStore({
   reducer,

@@ -15,18 +15,28 @@ module.exports = {
   },
 
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          plugins: [
-            isDevelopment && require.resolve('react-refresh/babel')
-          ].filter(Boolean)
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              isDevelopment && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
+          }
         }
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
       }
-    }]
+    ]
   },
 
   plugins: [
