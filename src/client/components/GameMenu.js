@@ -77,7 +77,7 @@ const GameMenu = ({ playerName, currentRoom, onCreateGame, onJoinGame, onPlaySol
               e.target.style.boxShadow = '0 5px 20px rgba(255, 0, 0, 0.3)'
             }}
           >
-            � Jouer en Solo
+            Jouer en Solo
           </button>
 
           <button 
